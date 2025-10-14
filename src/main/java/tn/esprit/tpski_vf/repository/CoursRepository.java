@@ -6,5 +6,4 @@ import tn.esprit.tpski_vf.entity.Cours;
 
 @Repository
 public interface CoursRepository extends JpaRepository<Cours, Long> {
-    // JpaRepository fournit déjà : save(), findAll(), findById(), deleteById()
 }

@@ -1,7 +1,5 @@
 package tn.esprit.tpski_vf.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.tpski_vf.entity.Skieur;
 import tn.esprit.tpski_vf.service.SkieurService;
@@ -18,20 +16,33 @@ public class SkieurController {
         this.skieurService = skieurService;
     }
 
-    // POST /skieurs → Ajouter un skieur
+    // CREATE
     @PostMapping
-    public ResponseEntity<Skieur> addSkieur(@RequestBody Skieur skieur) {
-        try {
-            Skieur saved = skieurService.addSkieur(skieur);
-            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    public Skieur addSkieur(@RequestBody Skieur skieur) {
+        return skieurService.addSkieur(skieur);
     }
 
-    // GET /skieurs → Liste de tous les skieurs
+    // UPDATE
+    @PutMapping("/{id}")
+    public Skieur updateSkieur(@PathVariable Long id, @RequestBody Skieur skieur) {
+        return skieurService.updateSkieur(id, skieur);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void deleteSkieur(@PathVariable Long id) {
+        skieurService.deleteSkieur(id);
+    }
+
+    // READ - ALL
     @GetMapping
-    public ResponseEntity<List<Skieur>> getAllSkieurs() {
-        return ResponseEntity.ok(skieurService.retrieveAllSkieurs());
+    public List<Skieur> getAllSkieurs() {
+        return skieurService.getAllSkieurs();
+    }
+
+    // READ - ONE
+    @GetMapping("/{id}")
+    public Skieur getSkieurById(@PathVariable Long id) {
+        return skieurService.getSkieurById(id);
     }
 }

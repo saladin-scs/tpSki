@@ -6,7 +6,4 @@ import tn.esprit.tpski_vf.entity.Skieur;
 
 @Repository
 public interface SkieurRepository extends JpaRepository<Skieur, Long> {
-
-
-
 }
