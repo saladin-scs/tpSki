@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_TOKEN = credentials(‘Sonar_Token’)
+    }
+
     stages {
 
         stage(‘Checkout’) {
@@ -9,24 +13,19 @@ pipeline {
             }
         }
 
-        stage(‘Build Maven’) {
-            steps {
-                sh ‘mvn clean install -DskipTests’
-            }
-        }
-
         stage(‘Maven SonarQube Analysis’) {
             steps {
                 script {
                     withSonarQubeEnv(‘sonar-server’) {
-                        sh ‘’’
+                        sh “””
                             mvn sonar:sonar \
                             -Dsonar.projectKey=TP-SKI_VF \
-                            -Dsonar.java.binaries=target/classes
-                        ‘’’
+                            -Dsonar.login=${SONAR_TOKEN}
+                        “””
                     }
                 }
             }
         }
     }
 }
+
